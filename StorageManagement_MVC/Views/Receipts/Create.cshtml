@@ -1,0 +1,112 @@
+﻿@model StorageManagement_MVC.Models.AddReceiptPageViewModel
+@using System.Security.Claims;
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container-fluid col-sm-12 col-xl-6">
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Add receipt</h6>
+        <form asp-action="Create">
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">User name</label>
+                <div class="col-sm-10">
+                    <input asp-for="Receipt.userName" class="form-control" id="UserName" value="@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value">
+                    <span asp-validation-for="Receipt.userName" class="text-danger"></span>
+                </div>
+            </div>
+            <button type="button" class="btn btn-sm btn-primary col-12" onclick="addProduct()" style="margin-bottom:50px">+</button>
+            <div class="products-container">
+                <div class="AddProduct">
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:50px; display:none;" id="submitContainer">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+</div>
+<script>
+    var index = -1;
+
+    function addProduct() {
+        index += 1;
+        var productsContainer = document.querySelector('.products-container');
+
+
+        var newProductDiv = document.createElement('div');
+        newProductDiv.classList.add('product');
+        newProductDiv.dataset.index = index;
+
+
+        newProductDiv.innerHTML = `
+                <div class="product-entry">
+                    <select name="ReceiptDetails[${index}].idProduct" class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">
+                        <option value="">-- Select a product --</option>
+    @foreach (var product in Model.Products)
+    {
+                                <option value="@product.Id">@product.Name</option>
+    }
+                    </select>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Product quantity</label>
+                        <div class="col-sm-10">
+                            <input type="number" name="ReceiptDetails[${index}].quantity" class="form-control" id="Quantity">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+
+        productsContainer.appendChild(newProductDiv);
+
+ 
+        updateDropButton();
+
+
+        if (submitContainer.style.display === 'none') {
+            submitContainer.style.display = 'block';
+        }
+    }
+
+    function updateDropButton() {
+
+        var existingDropButton = document.querySelector('.drop-button');
+        if (existingDropButton) {
+            existingDropButton.remove();
+        }
+
+
+        var lastProductDiv = document.querySelector('.products-container .product:last-child');
+        if (lastProductDiv) {
+            var dropButton = document.createElement('button');
+            dropButton.type = 'button';
+            dropButton.classList.add('btn', 'btn-sm', 'btn-danger', 'col-12', 'drop-button');
+            dropButton.innerText = 'Drop';
+            dropButton.onclick = function () { dropProduct(lastProductDiv); };
+            lastProductDiv.appendChild(dropButton);
+        }
+    }
+
+    function dropProduct(productDiv) {
+        productDiv.remove();
+        index -= 1;
+
+
+        updateDropButton();
+
+
+        if (index === -1) {
+            submitContainer.style.display = 'none';
+        }
+    }
+
+    var submitContainer = document.getElementById('submitContainer');
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

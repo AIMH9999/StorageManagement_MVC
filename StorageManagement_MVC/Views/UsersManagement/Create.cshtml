@@ -1,0 +1,81 @@
+﻿@model StorageManagement_MVC.Models.User
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container-fluid col-sm-12 col-xl-6">
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Add product</h6>
+        <form asp-action="Create">
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">User name</label>
+                <div class="col-sm-10">
+                    <input asp-for="userId" class="form-control" id="userId">
+                    <span asp-validation-for="userId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                    <input asp-for="passWord" class="form-control" id="passWord">
+                    <span asp-validation-for="passWord" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input asp-for="userName" class="form-control" id="userName">
+                    <span asp-validation-for="userName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Gender</label>
+                <div class="col-sm-10">
+                    <select asp-for="Gender" class="form-control" id="Gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Day of birth</label>
+                <div class="col-sm-10">
+                    <input asp-for="Birthday" class="form-control" id="Birthday">
+                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Phone number</label>
+                <div class="col-sm-10">
+                    <span class="input-group-text">+84</span>
+                    <input asp-for="phoneNumber" class="form-control" id="phoneNumber">
+                    <span asp-validation-for="phoneNumber" class="text-danger"></span>
+                </div>
+            </div>          
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Role</label>
+                <div class="col-sm-10">
+                    <select asp-for="Role" class="form-control" id="Role">
+                        <option value="ACCOUNTING">ACCOUNTING</option>
+                        <option value="ADMIN">ADMIN</option>                    
+                    </select>
+                    <span asp-validation-for="Role" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+

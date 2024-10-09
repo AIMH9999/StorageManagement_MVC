@@ -1,0 +1,68 @@
+﻿@model StorageManagement_MVC.Models.User
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light rounded h-100 p-4">
+            <h6 class="mb-4">Edit Product</h6>
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="Role" />
+                </div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="passWord" />
+                </div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="Status" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="userId" class="control-label"></label>
+                    <input asp-for="userId" class="form-control" readonly />
+                    <span asp-validation-for="userId" class="text-danger"></span>
+                </div>    
+                <div class="form-group">
+                    <label asp-for="userName" class="control-label"></label>
+                    <input asp-for="userName" class="form-control" />
+                    <span asp-validation-for="userName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Gender" class="control-label"></label>
+                    <select asp-for="Gender" class="form-control">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Birthday" class="control-label"></label>
+                    <input asp-for="Birthday" class="form-control" />
+                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="phoneNumber" class="control-label"></label>
+                    <input asp-for="phoneNumber" class="form-control" />
+                    <span asp-validation-for="phoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+            <div>
+                <a asp-action="Profile">Back to profile</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

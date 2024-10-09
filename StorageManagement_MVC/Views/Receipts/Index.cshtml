@@ -1,0 +1,38 @@
+﻿@model IEnumerable<StorageManagement.Models.Receipt>
+
+@{
+    ViewData["Title"] = "ProductList";
+}
+<div class="container-fluid pt-4 px-4">
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light rounded h-100 p-4">
+            <h6 class="mb-4">All receipt</h6>
+            <form asp-controller="Receipts" asp-action="Index" class="d-none d-md-flex ms-4">
+                <input class="form-control border-0" type="search" placeholder="Search" name="SearchString" />
+            </form>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">User name</th>
+                        <th scope="col">Total product quantity</th>
+                        <th scope="col">Total price</th>
+                        <th scope="col">Create at</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@Html.DisplayFor(modelItem => item.Id)</th>
+                            <td>@Html.DisplayFor(modelItem => item.userName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.totalProductQuantity)</td>
+                            <td>@Html.DisplayFor(modelItem => item.totalPrice)VNĐ</td>
+                            <td>@Html.DisplayFor(modelItem => item.createdAt)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>          
+        </div>
+    </div>
+</div>

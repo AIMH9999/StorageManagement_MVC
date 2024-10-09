@@ -1,0 +1,87 @@
+﻿@model IEnumerable<StorageManagement_MVC.Models.User>
+
+@{
+    ViewData["Title"] = "ProductList";
+}
+<div class="container-fluid pt-4 px-4">
+
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light rounded h-100 p-4">
+            <h6 class="mb-4">All receipt</h6>
+            <form asp-controller="UsersManagement" asp-action="Index" class="d-none d-md-flex ms-4">
+                <input class="form-control border-0" type="search" placeholder="Search" name="SearchString" />
+            </form>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">User</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Day of Birth</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th class="UserId" onclick="handleClickUserId(event)" scope="row">@Html.DisplayFor(modelItem => item.userId)</th>
+                            <td>@Html.DisplayFor(modelItem => item.passWord)</td>
+                            <td>@Html.DisplayFor(modelItem => item.userName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Birthday)</td>
+                            <td>+84 @Html.DisplayFor(modelItem => item.phoneNumber)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Role)</td>
+                            <td>
+                                @if (item.Status == 1)
+                                {
+                                    @:Active
+                                            }
+                                else
+                                {
+                                    @:Lock
+                                            }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <form id="lockUnlockForm" asp-controller="UsersManagement" asp-action="Lock_Unlock" method="post" class="d-none d-md-flex ms-4">
+                <input type="hidden" id="userIdInput" name="userId" value="" />
+                <button type="button" id="lockUnlockButton" class="btn btn-outline-warning m-2">LOCK / UNLOCK</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var idDataCells = document.querySelectorAll('.UserId');
+            idDataCells.forEach(function (cell) {
+                cell.classList.remove('selectedUserId');
+            });
+            sessionStorage.removeItem('selectedUserId');
+
+            var lockUnlockButton = document.getElementById('lockUnlockButton');
+            var lockUnlockForm = document.getElementById('lockUnlockForm');
+
+            lockUnlockButton.addEventListener('click', function () {
+                var selectedUserId = sessionStorage.getItem('selectedUserId');
+                if (selectedUserId == 'admin') {
+                    alert('Can not change admin');
+                }
+                else if (selectedUserId) {
+                    document.getElementById('userIdInput').value = selectedUserId;
+                    lockUnlockForm.submit();
+                } else {
+                    alert('Please select a user first.');
+                }
+            });
+        });
+</script>
+
+

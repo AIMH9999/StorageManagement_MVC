@@ -1,0 +1,49 @@
+﻿@using System.Security.Claims;
+@model StorageManagement_MVC.Models.User
+@{
+    ViewData["Title"] = "Profile";
+}
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light rounded h-100 p-4">
+            <h6 class="mb-4">Welcome, @User.Identity.Name!</h6>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">User</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Day of Birth</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Role</th>
+                        <th scope="col"></th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value</th>
+                        <td>@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value</td>
+                        <td>@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Gender)?.Value</td>
+                        <td>@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.DateOfBirth)?.Value</td>
+                        <td>+84 @User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.MobilePhone)?.Value</td>
+                        <td>@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value</td>
+                        <td>
+                            <a href="/users/edit/@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value">Edit info</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="container-fluid pt-2">
+                <div class="row">
+                    <div class="col text-end">
+                        <a href="/users/ChangePassword/@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value">Change password</a>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+

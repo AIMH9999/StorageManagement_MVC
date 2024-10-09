@@ -1,0 +1,43 @@
+﻿@model IEnumerable<StorageManagement.Models.productInventory>
+
+@{
+    ViewData["Title"] = "ProductInventory";
+}
+<div class="container-fluid pt-4 px-4">
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light rounded h-100 p-4">
+            <h6 class="mb-4">Product inventory</h6>
+            <form asp-controller="Products" asp-action="ProductInventory" class="d-none d-md-flex ms-4">
+                <input class="form-control border-0" type="search" placeholder="Search" name="SearchString" />
+            </form>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price input</th>
+                        <th scope="col">Price output</th>
+                        <th scope="col">Total price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope ="row">@Html.DisplayFor(modelItem => item.Id)</th>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Category)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                            <td>@Html.DisplayFor(modelItem => item.priceInput)VNĐ</td>
+                            <td>@Html.DisplayFor(modelItem => item.priceOutput)VNĐ</td>
+                            <td>@Html.DisplayFor(modelItem => item.totalPrice)VNĐ</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>           
+        </div>
+    </div>
+</div>
+
